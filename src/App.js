@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Main from "./routes/Main";
+import CreatePlan from "./routes/CreatePlan";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Main />} />
+          <Route path="/create_plan" element={<CreatePlan />} />
           Learn React
         </Routes>
         <Footer />
