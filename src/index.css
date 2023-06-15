@@ -16,4 +16,29 @@
   .h-75vh {
     height: 75vh;
   }
+
+  .h-list-custom {
+    height: 68.25vh;
+  }
+
+  /* 스크롤바 커스텀 */
+  .scrollbar::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    /* background: #f7f4ed; */
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #595959;
+    border-radius: 100vh;
+    /* border: 3px solid #f6f7ed; */
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #797979;
+  }
 }

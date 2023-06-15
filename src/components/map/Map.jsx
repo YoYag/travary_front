@@ -1,10 +1,18 @@
 import React from "react";
 import GoogleMapReact from "google-map-react";
+import Marker from "./Marker";
 
-const Map = ({ setApiReady, setMapData, setMapApiData }) => {
+const Map = ({
+  setApiReady,
+  setMapData,
+  setMapApiData,
+  places,
+  activatedLocation,
+  setActivatedLocation,
+}) => {
   // 지도 api_key
   const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
-  const AnyReactComponent = ({ text }) => <div>{text}</div>;
+  // const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
   // 기본 지도 세팅값
   const defaultProps = {
@@ -28,6 +36,10 @@ const Map = ({ setApiReady, setMapData, setMapApiData }) => {
     }
   };
 
+  const markerClicked = (key) => {
+    setActivatedLocation(key);
+  };
+
   return (
     // Important! Always set the container height explicitly
     <div className="w-full h-full">
@@ -40,10 +52,20 @@ const Map = ({ setApiReady, setMapData, setMapApiData }) => {
         defaultCenter={defaultProps.center}
         defaultZoom={defaultProps.zoom}
         yesIWantToUseGoogleMapApiInternals
+        onChildClick={markerClicked}
         // map은 지도 객체, maps에는 api object가 들어있음
         onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
       >
-        <AnyReactComponent lat={37.487935} lng={126.857758} text="My Marker" />
+        {places.length !== 0 &&
+          places.map((place) => (
+            <Marker
+              key={place.place_id}
+              lat={place.geometry.location.lat()}
+              lng={place.geometry.location.lng()}
+              activatedLocation={place.place_id === activatedLocation}
+            />
+          ))}
+        {/* <AnyReactComponent lat={37.487935} lng={126.857758} text="My Marker" /> */}
       </GoogleMapReact>
     </div>
   );
