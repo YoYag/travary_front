@@ -26,24 +26,24 @@ const Header = () => {
       </div>
       <div className="flex">
         <nav className="flex w-full justify-center">
-          <ul className="menu menu-horizontal bg-base-100">
+          <ul className="menu py-0 menu-horizontal bg-base-100 text-base">
             <li>
-              <Link to={`/`} className="active:bg-base-content">
+              <Link to={`/`} className="rounded-none">
                 메인
               </Link>
             </li>
             <li>
-              <Link to={`/plan`} className="active:bg-base-content">
+              <Link to={`/plan`} className="rounded-none">
                 계획
               </Link>
             </li>
             <li>
-              <Link to={`/meet`} className="active:bg-base-content">
+              <Link to={`/meet`} className="rounded-none">
                 만남
               </Link>
             </li>
             <li>
-              <Link to={`/diary`} className="active:bg-base-content">
+              <Link to={`/diary`} className="rounded-none">
                 일기
               </Link>
             </li>

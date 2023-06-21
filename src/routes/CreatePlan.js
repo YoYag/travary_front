@@ -11,19 +11,6 @@ const CreatePlan = () => {
   const [places, setPlaces] = useState([]);
   const [activatedLocation, setActivatedLocation] = useState("");
 
-  const showData = () => {
-    console.log("apiReady = ", apiReady);
-    console.log("mapData = ", mapData);
-    console.log("mapApiData = ", mapApiData);
-  };
-
-  // 검색기능(지도 마커 표시)
-  const addPlace = (places) => {
-    if (places) {
-      setPlaces(places);
-    }
-  };
-
   return (
     <div className="w-full h-75vh flex">
       {apiReady ? (
@@ -33,7 +20,7 @@ const CreatePlan = () => {
             mapData={mapData}
             mapApiData={mapApiData}
             places={places}
-            addPlace={addPlace}
+            setPlaces={setPlaces}
             activatedLocation={activatedLocation}
             setActivatedLocation={setActivatedLocation}
           />
@@ -49,9 +36,6 @@ const CreatePlan = () => {
         activatedLocation={activatedLocation}
         setActivatedLocation={setActivatedLocation}
       />
-      <button className={"btn"} onClick={showData}>
-        data확인
-      </button>
     </div>
   );
 };
