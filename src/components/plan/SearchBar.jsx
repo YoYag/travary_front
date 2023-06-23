@@ -1,9 +1,11 @@
 import React from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 const SearchBar = ({ mapData, mapApiData, setPlaces }) => {
+  console.log(mapApiData);
+
   const inputRef = useRef(null);
-  const [searchBox, setSearchBox] = useState("");
+  let searchBox;
 
   // 검색기능(지도 마커 표시)
   const addPlace = (places) => {
@@ -12,7 +14,7 @@ const SearchBar = ({ mapData, mapApiData, setPlaces }) => {
     }
   };
 
-  const onPlacesChanged = useCallback(() => {
+  const onPlacesChanged = () => {
     const selected = searchBox.getPlaces();
 
     // 새로운 LatLngBounds 객체 생성
@@ -32,10 +34,10 @@ const SearchBar = ({ mapData, mapApiData, setPlaces }) => {
 
     mapData.fitBounds(bounds);
     addPlace(selected);
-  }, [addPlace, mapApiData, mapData, searchBox]);
+  };
 
   useEffect(() => {
-    setSearchBox(new mapApiData.places.SearchBox(inputRef.current));
+    searchBox = new mapApiData.places.SearchBox(inputRef.current);
 
     // searchBox에서 장소 선택 시, 이벤트 발생
     searchBox.addListener("places_changed", onPlacesChanged);
@@ -43,10 +45,12 @@ const SearchBar = ({ mapData, mapApiData, setPlaces }) => {
     // searchBox 결과가 map화면에 보여지며 해당 위치로 viewport가 이동
     searchBox.bindTo("bounds", mapData);
 
+    console.log("실행됨");
+
     // return () => {
     //   mapApiData.event.clearInstanceListeners(inputRef.current);
     // };
-  }, [onPlacesChanged]);
+  }, [searchBox]);
 
   return (
     <div className="form-control">

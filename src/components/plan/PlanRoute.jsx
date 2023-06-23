@@ -1,14 +1,17 @@
 import React from "react";
-import { useCallback, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
-const PlanRoute = ({
-  planInfo,
-  setPlanInfo,
-  dayPlaceSchedule,
-  setDayPlaceSchedule,
-}) => {
+const PlanRoute = () => {
   const [countDate, setCountDate] = useState([]);
   const [dayCurrentIndex, setDayCurrentIndex] = useState(0);
+  const [dayPlaceSchedule, setDayPlaceSchedule] = useState({});
+
+  const [planInfo, setPlanInfo] = useState({
+    startPlan: "",
+    endPlan: "",
+    countDate: "",
+    dayPlaceSchedule: "",
+  });
 
   // 날짜 계산
   const startDate = new Date(planInfo.startPlan.split("-"));
@@ -16,7 +19,7 @@ const PlanRoute = ({
   const dif = endDate - startDate;
   const timeSchedule = dif / 24 / 60 / 60 / 1000; // 시 * 분 * 초 * 밀리세컨
 
-  const countDatePlan = useCallback(() => {
+  const countDatePlan = () => {
     let newArr = [];
     let newDayArr = [];
     for (let i = 0; i <= timeSchedule; i++) {
@@ -29,11 +32,12 @@ const PlanRoute = ({
       ...planInfo,
       countDate: JSON.stringify(newArr),
     });
-  }, [planInfo, timeSchedule, setDayPlaceSchedule, setPlanInfo]);
+  };
 
   useEffect(() => {
     countDatePlan();
-  }, [countDatePlan]);
+    console.log(endDate);
+  }, [dayCurrentIndex]);
 
   const countList = countDate.map((day, i) => (
     <li
@@ -49,6 +53,8 @@ const PlanRoute = ({
       </button>
     </li>
   ));
+
+  // console.log("PlanRoute");
 
   return (
     <div className="w-full border-r relative">

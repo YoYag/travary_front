@@ -40,11 +40,11 @@ const SearchMap = ({
 
   return (
     <div className="w-full relative">
-      <SearchBar
+      {/* <SearchBar
         mapData={mapData}
         mapApiData={mapApiData}
         setPlaces={setPlaces}
-      />
+      /> */}
       <ul className="menu p-0 block h-list-custom overflow-y-auto scrollbar">
         {places && showList}
       </ul>
