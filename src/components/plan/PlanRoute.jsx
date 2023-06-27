@@ -36,7 +36,6 @@ const PlanRoute = () => {
 
   useEffect(() => {
     countDatePlan();
-    console.log("effect 실행");
   }, [countDatePlan, planInfo.startPlan, planInfo.endPlan]);
 
   const showData = () => {
@@ -58,7 +57,7 @@ const PlanRoute = () => {
     </li>
   ));
 
-  // console.log("PlanRoute");
+  console.log("PlanRoute");
 
   return (
     <div className="w-full border-r relative">

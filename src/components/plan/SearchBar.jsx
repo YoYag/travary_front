@@ -1,56 +1,52 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useEffect, useRef } from "react";
 
 const SearchBar = ({ mapData, mapApiData, setPlaces }) => {
-  console.log(mapApiData);
-
   const inputRef = useRef(null);
-  let searchBox;
 
   // 검색기능(지도 마커 표시)
-  const addPlace = (places) => {
-    if (places) {
-      setPlaces(places);
-    }
-  };
-
-  const onPlacesChanged = () => {
-    const selected = searchBox.getPlaces();
-
-    // 새로운 LatLngBounds 객체 생성
-    let bounds = new mapApiData.LatLngBounds();
-
-    selected.forEach((place) => {
-      if (!place.geometry) return;
-
-      if (place.geometry.viewport) {
-        // 객체의 좌표 경계와 현재 좌표 경계를 모두 포함하는 새로운 좌표 경계 객체를 반환
-        bounds.union(place.geometry.viewport);
-      } else {
-        bounds.extend(place.geometry.location);
-        // mapData.setZoom(14);
+  const addPlace = useCallback(
+    (places) => {
+      if (places) {
+        setPlaces(places);
       }
-    });
-
-    mapData.fitBounds(bounds);
-    addPlace(selected);
-  };
+    },
+    [setPlaces]
+  );
 
   useEffect(() => {
-    searchBox = new mapApiData.places.SearchBox(inputRef.current);
+    const searchBox = new mapApiData.places.SearchBox(inputRef.current);
+
+    const onPlacesChanged = () => {
+      const selected = searchBox.getPlaces();
+
+      // 새로운 LatLngBounds 객체 생성
+      let bounds = new mapApiData.LatLngBounds();
+
+      selected.forEach((place) => {
+        if (!place.geometry) return;
+
+        if (place.geometry.viewport) {
+          // 객체의 좌표 경계와 현재 좌표 경계를 모두 포함하는 새로운 좌표 경계 객체를 반환
+          bounds.union(place.geometry.viewport);
+        } else {
+          bounds.extend(place.geometry.location);
+          // mapData.setZoom(14);
+        }
+      });
+
+      mapData.fitBounds(bounds);
+      addPlace(selected);
+    };
 
     // searchBox에서 장소 선택 시, 이벤트 발생
     searchBox.addListener("places_changed", onPlacesChanged);
 
     // searchBox 결과가 map화면에 보여지며 해당 위치로 viewport가 이동
     searchBox.bindTo("bounds", mapData);
+  }, [addPlace, mapApiData, mapData]);
 
-    console.log("실행됨");
-
-    // return () => {
-    //   mapApiData.event.clearInstanceListeners(inputRef.current);
-    // };
-  }, [searchBox]);
+  console.log("SearchBar");
 
   return (
     <div className="form-control">
@@ -61,13 +57,6 @@ const SearchBar = ({ mapData, mapApiData, setPlaces }) => {
         className="input input-bordered input-sm w-full max-w-xs"
         ref={inputRef}
       />
-      <button
-        onClick={() => {
-          console.log(searchBox);
-        }}
-      >
-        클릭
-      </button>
     </div>
   );
 };
