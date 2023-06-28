@@ -9,11 +9,18 @@ const SearchMap = ({
   setPlaces,
   activatedLocation,
   setActivatedLocation,
+  dayCurrentIndex,
+  dayPlaceSchedule,
+  setDayPlaceSchedule,
+  planInfo,
 }) => {
   const [selectPlace, setSelectPlace] = useState("");
 
-  const showData = () => {
-    console.log(selectPlace);
+  const addPlace = () => {
+    let newArr = [...dayPlaceSchedule];
+    newArr[dayCurrentIndex].push(selectPlace);
+    setDayPlaceSchedule(newArr);
+    planInfo.dayPlaceSchedule = JSON.stringify(dayPlaceSchedule);
   };
 
   const showList = places.map((place, i) => (
@@ -49,7 +56,7 @@ const SearchMap = ({
       </ul>
       <button
         className="btn btn-outline btn-neutral btn-sm w-full absolute bottom-0"
-        onClick={showData}
+        onClick={addPlace}
       >
         일정에 추가
       </button>

@@ -1,20 +1,14 @@
-import React, { useCallback, useMemo } from "react";
-import { useState, useEffect } from "react";
+import React from "react";
+import { useState, useEffect, useCallback } from "react";
 
-const PlanRoute = () => {
+const PlanRoute = ({
+  dayCurrentIndex,
+  setDayCurrentIndex,
+  dayPlaceSchedule,
+  setDayPlaceSchedule,
+  planInfo,
+}) => {
   const [countNum, setCountNum] = useState([]);
-  const [dayCurrentIndex, setDayCurrentIndex] = useState(0);
-  const [dayPlaceSchedule, setDayPlaceSchedule] = useState({});
-
-  const planInfo = useMemo(
-    () => ({
-      startPlan: "",
-      endPlan: "",
-      countDate: "",
-      dayPlaceSchedule: "",
-    }),
-    []
-  );
 
   const countDatePlan = useCallback(() => {
     // 날짜 계산
@@ -32,14 +26,14 @@ const PlanRoute = () => {
     setCountNum(newCountArr);
     setDayPlaceSchedule(newScheduleArr);
     planInfo.countDate = JSON.stringify(newCountArr);
-  }, [planInfo]);
+  }, [planInfo, setDayPlaceSchedule]);
 
   useEffect(() => {
     countDatePlan();
   }, [countDatePlan, planInfo.startPlan, planInfo.endPlan]);
 
   const showData = () => {
-    console.log(dayPlaceSchedule);
+    console.log(planInfo);
   };
 
   const countList = countNum.map((day, i) => (
@@ -54,6 +48,25 @@ const PlanRoute = () => {
         <p>{day + 1}</p>
         <p>일차</p>
       </button>
+    </li>
+  ));
+
+  const planList = countNum.map((day, i) => (
+    <li
+      key={i}
+      className={
+        i === dayCurrentIndex
+          ? "absolute min-h-full w-full z-10"
+          : "absolute invisible max-h-0 overflow-y-auto w-full"
+      }
+    >
+      <ul className="steps steps-vertical">
+        {dayPlaceSchedule[day].map((place, i) => (
+          <li key={i} className="step step-neutral text-left">
+            {place}
+          </li>
+        ))}
+      </ul>
     </li>
   ));
 
@@ -80,8 +93,9 @@ const PlanRoute = () => {
         }}
       />
       <div className="flex w-full h-list-custom">
-        <ul className="menu p-0 block w-8 overflow-y-auto scrollbar">
-          {countList}
+        <ul className="menu p-0 block w-8 overflow-y-auto">{countList}</ul>
+        <ul className="relative w-full overflow-y-auto scrollbar">
+          {planList}
         </ul>
       </div>
       <button

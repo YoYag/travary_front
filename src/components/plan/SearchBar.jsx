@@ -1,18 +1,8 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { useEffect, useRef } from "react";
 
 const SearchBar = ({ mapData, mapApiData, setPlaces }) => {
   const inputRef = useRef(null);
-
-  // 검색기능(지도 마커 표시)
-  const addPlace = useCallback(
-    (places) => {
-      if (places) {
-        setPlaces(places);
-      }
-    },
-    [setPlaces]
-  );
 
   useEffect(() => {
     const searchBox = new mapApiData.places.SearchBox(inputRef.current);
@@ -36,7 +26,9 @@ const SearchBar = ({ mapData, mapApiData, setPlaces }) => {
       });
 
       mapData.fitBounds(bounds);
-      addPlace(selected);
+
+      // 검색기능(지도 마커 표시)
+      setPlaces(selected);
     };
 
     // searchBox에서 장소 선택 시, 이벤트 발생
@@ -44,7 +36,7 @@ const SearchBar = ({ mapData, mapApiData, setPlaces }) => {
 
     // searchBox 결과가 map화면에 보여지며 해당 위치로 viewport가 이동
     searchBox.bindTo("bounds", mapData);
-  }, [addPlace, mapApiData, mapData]);
+  }, [setPlaces, mapApiData, mapData]);
 
   console.log("SearchBar");
 
