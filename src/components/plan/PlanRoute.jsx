@@ -62,7 +62,16 @@ const PlanRoute = ({
     >
       <ul className="steps steps-vertical">
         {dayPlaceSchedule[day].map((place, i) => (
-          <li key={i} className="step step-neutral text-left">
+          <li
+            key={i}
+            className="step step-neutral text-left cursor-pointer"
+            onClick={() => {
+              let newScheduleArr = [...dayPlaceSchedule];
+              newScheduleArr[dayCurrentIndex].splice(i, 1);
+              setDayPlaceSchedule(newScheduleArr);
+              planInfo.dayPlaceSchedule = JSON.stringify(dayPlaceSchedule);
+            }}
+          >
             {place}
           </li>
         ))}
