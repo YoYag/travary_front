@@ -54,7 +54,9 @@ const CreatePlan = () => {
       )}
       <Map
         setApiReady={setApiReady}
+        mapData={mapData}
         setMapData={setMapData}
+        mapApiData={mapApiData}
         setMapApiData={setMapApiData}
         places={places}
         activatedLocation={activatedLocation}

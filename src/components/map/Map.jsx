@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import GoogleMapReact from "google-map-react";
 import Marker from "./Marker";
 
 const Map = ({
   setApiReady,
+  mapData,
   setMapData,
+  mapApiData,
   setMapApiData,
   places,
   activatedLocation,
@@ -12,7 +14,6 @@ const Map = ({
 }) => {
   // 지도 api_key
   const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
-  // const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
   // 기본 지도 세팅값
   const defaultProps = {
@@ -40,9 +41,62 @@ const Map = ({
     setActivatedLocation(key);
   };
 
+  const getLocation = useCallback(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+        mapData.setCenter(pos);
+      });
+    }
+  }, [mapData]);
+
+  // 사용자 정의 버튼
+  const createLocationControl = useCallback(() => {
+    const locationButton = document.createElement("button");
+    const insertfas = document.createElement("i");
+
+    // Set CSS for the control.
+    locationButton.className = "btn btn-square absolute bottom-1 left-4";
+    locationButton.appendChild(insertfas);
+    insertfas.className = "fa-solid fa-location-crosshairs text-2xl";
+    // Setup the click event listeners: simply set the map to Chicago.
+    locationButton.addEventListener("click", () => {
+      getLocation();
+    });
+    return locationButton;
+  }, [getLocation]);
+
+  // 맵 내부 버튼 표시
+  const initMap = useCallback(() => {
+    // Create the DIV to hold the control.
+    const centerControlDiv = document.createElement("div");
+    // Create the control.
+    const centerControl = createLocationControl(mapData);
+
+    // Append the control to the DIV.
+    centerControlDiv.appendChild(centerControl);
+    mapData.controls[mapApiData.ControlPosition.LEFT_BOTTOM].push(
+      centerControlDiv
+    );
+  }, [createLocationControl, mapApiData, mapData]);
+
+  useEffect(() => {
+    if (mapData && mapApiData) {
+      initMap();
+      console.log("init success");
+    } else {
+      console.log("init fail");
+    }
+  }, [initMap, mapData, mapApiData]);
+
+  console.log("map");
+
   return (
     // Important! Always set the container height explicitly
-    <div className="w-full h-full">
+    <div className="w-full h-full relative">
       <GoogleMapReact
         bootstrapURLKeys={{
           key: API_KEY,
@@ -65,7 +119,6 @@ const Map = ({
               activatedLocation={place.place_id === activatedLocation}
             />
           ))}
-        {/* <AnyReactComponent lat={37.487935} lng={126.857758} text="My Marker" /> */}
       </GoogleMapReact>
     </div>
   );

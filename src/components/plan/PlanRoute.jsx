@@ -102,7 +102,9 @@ const PlanRoute = ({
         }}
       />
       <div className="flex w-full h-list-custom">
-        <ul className="menu p-0 block w-8 overflow-y-auto">{countList}</ul>
+        <ul className="menu p-0 block w-8 overflow-y-auto scrollbar">
+          {countList}
+        </ul>
         <ul className="relative w-full overflow-y-auto scrollbar">
           {planList}
         </ul>
