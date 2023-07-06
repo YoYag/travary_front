@@ -7,7 +7,7 @@ import SearchMap from "../components/plan/SearchMap";
 const CreatePlan = () => {
   const [apiReady, setApiReady] = useState(false);
   const [mapData, setMapData] = useState("");
-  const [mapApiData, setMapApiData] = useState("");
+  const [mapsData, setMapsData] = useState("");
   const [places, setPlaces] = useState([]);
   const [activatedLocation, setActivatedLocation] = useState("");
   const [dayCurrentIndex, setDayCurrentIndex] = useState(0);
@@ -38,7 +38,7 @@ const CreatePlan = () => {
           />
           <SearchMap
             mapData={mapData}
-            mapApiData={mapApiData}
+            mapsData={mapsData}
             places={places}
             setPlaces={setPlaces}
             activatedLocation={activatedLocation}
@@ -56,8 +56,8 @@ const CreatePlan = () => {
         setApiReady={setApiReady}
         mapData={mapData}
         setMapData={setMapData}
-        mapApiData={mapApiData}
-        setMapApiData={setMapApiData}
+        mapsData={mapsData}
+        setMapsData={setMapsData}
         places={places}
         activatedLocation={activatedLocation}
         setActivatedLocation={setActivatedLocation}

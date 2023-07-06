@@ -4,7 +4,7 @@ import SearchBar from "./SearchBar";
 
 const SearchMap = ({
   mapData,
-  mapApiData,
+  mapsData,
   places,
   setPlaces,
   activatedLocation,
@@ -46,11 +46,7 @@ const SearchMap = ({
 
   return (
     <div className="w-full relative">
-      <SearchBar
-        mapData={mapData}
-        mapApiData={mapApiData}
-        setPlaces={setPlaces}
-      />
+      <SearchBar mapData={mapData} mapsData={mapsData} setPlaces={setPlaces} />
       <ul className="menu p-0 block h-list-custom overflow-y-auto scrollbar">
         {places && showList}
       </ul>

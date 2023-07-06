@@ -1,19 +1,21 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import GoogleMapReact from "google-map-react";
 import Marker from "./Marker";
+import CurrentPin from "./CurrentPin";
 
 const Map = ({
   setApiReady,
   mapData,
   setMapData,
-  mapApiData,
-  setMapApiData,
+  mapsData,
+  setMapsData,
   places,
   activatedLocation,
   setActivatedLocation,
 }) => {
   // 지도 api_key
   const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
+  const [currentPos, setCurrentPos] = useState(null);
 
   // 기본 지도 세팅값
   const defaultProps = {
@@ -24,16 +26,16 @@ const Map = ({
     zoom: 10,
   };
 
-  // 검색기능(장소정보 api)
+  // Google Maps API 사용
   const handleApiLoaded = (map, maps) => {
     // map과 maps 개체가 로드됐다면, 각각의 state값에 넣어준다.
     if (map && maps) {
       setApiReady(true);
       setMapData(map);
-      setMapApiData(maps);
-      console.log("Api 로딩 성공");
+      setMapsData(maps);
+      console.log("Google Maps Api 로딩 성공");
     } else {
-      console.log("Api 로딩 실패");
+      console.log("Google Maps Api 로딩 실패");
     }
   };
 
@@ -48,6 +50,7 @@ const Map = ({
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         };
+        setCurrentPos(pos);
         mapData.setCenter(pos);
       });
     }
@@ -62,7 +65,7 @@ const Map = ({
     locationButton.className = "btn btn-square absolute bottom-1 left-4";
     locationButton.appendChild(insertfas);
     insertfas.className = "fa-solid fa-location-crosshairs text-2xl";
-    // Setup the click event listeners: simply set the map to Chicago.
+    // Setup the click event listeners: set the map to current location.
     locationButton.addEventListener("click", () => {
       getLocation();
     });
@@ -78,19 +81,19 @@ const Map = ({
 
     // Append the control to the DIV.
     centerControlDiv.appendChild(centerControl);
-    mapData.controls[mapApiData.ControlPosition.LEFT_BOTTOM].push(
+    mapData.controls[mapsData.ControlPosition.LEFT_BOTTOM].push(
       centerControlDiv
     );
-  }, [createLocationControl, mapApiData, mapData]);
+  }, [createLocationControl, mapData, mapsData]);
 
   useEffect(() => {
-    if (mapData && mapApiData) {
+    if (mapData && mapsData) {
       initMap();
       console.log("init success");
     } else {
       console.log("init fail");
     }
-  }, [initMap, mapData, mapApiData]);
+  }, [initMap, mapData, mapsData]);
 
   console.log("map");
 
@@ -119,6 +122,11 @@ const Map = ({
               activatedLocation={place.place_id === activatedLocation}
             />
           ))}
+        {currentPos ? (
+          <CurrentPin lat={currentPos.lat} lng={currentPos.lng} />
+        ) : (
+          ""
+        )}
       </GoogleMapReact>
     </div>
   );

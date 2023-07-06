@@ -5,7 +5,7 @@ const Marker = ({ activatedLocation }) => {
     <div className="cursor-pointer">
       {activatedLocation ? (
         <button>
-          <i className="fas fa-location-dot text-xl" />
+          <i className="fa-solid fa-map-pin text-2xl" />
         </button>
       ) : (
         <div>

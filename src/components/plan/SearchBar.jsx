@@ -1,17 +1,17 @@
 import React from "react";
 import { useEffect, useRef } from "react";
 
-const SearchBar = ({ mapData, mapApiData, setPlaces }) => {
+const SearchBar = ({ mapData, mapsData, setPlaces }) => {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    const searchBox = new mapApiData.places.SearchBox(inputRef.current);
+    const searchBox = new mapsData.places.SearchBox(inputRef.current);
 
     const onPlacesChanged = () => {
       const selected = searchBox.getPlaces();
 
       // 새로운 LatLngBounds 객체 생성
-      let bounds = new mapApiData.LatLngBounds();
+      let bounds = new mapsData.LatLngBounds();
 
       selected.forEach((place) => {
         if (!place.geometry) return;
@@ -36,7 +36,7 @@ const SearchBar = ({ mapData, mapApiData, setPlaces }) => {
 
     // searchBox 결과가 map화면에 보여지며 해당 위치로 viewport가 이동
     searchBox.bindTo("bounds", mapData);
-  }, [setPlaces, mapApiData, mapData]);
+  }, [setPlaces, mapsData, mapData]);
 
   console.log("SearchBar");
 
