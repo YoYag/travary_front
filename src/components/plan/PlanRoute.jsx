@@ -64,7 +64,7 @@ const PlanRoute = ({
         {dayPlaceSchedule[day].map((place, i) => (
           <li
             key={i}
-            className="step step-neutral text-left cursor-pointer"
+            className="step step-neutral cursor-pointer"
             onClick={() => {
               let newScheduleArr = [...dayPlaceSchedule];
               newScheduleArr[dayCurrentIndex].splice(i, 1);
@@ -72,7 +72,7 @@ const PlanRoute = ({
               planInfo.dayPlaceSchedule = JSON.stringify(dayPlaceSchedule);
             }}
           >
-            {place}
+            <p className="text-left">{place}</p>
           </li>
         ))}
       </ul>
@@ -102,7 +102,7 @@ const PlanRoute = ({
         }}
       />
       <div className="flex w-full h-list-custom">
-        <ul className="menu p-0 block w-8 overflow-y-auto scrollbar">
+        <ul className="menu p-0 block overflow-y-auto scrollbar">
           {countList}
         </ul>
         <ul className="relative w-full overflow-y-auto scrollbar">
