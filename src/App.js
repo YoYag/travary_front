@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Main from "./routes/Main";
 import CreatePlan from "./routes/CreatePlan";
+import PlanDetail from "./routes/PlanDetail";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/create_plan" element={<CreatePlan />} />
+          <Route path="/planDetail" element={<PlanDetail />} />
           Learn React
         </Routes>
         <Footer />

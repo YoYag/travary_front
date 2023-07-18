@@ -1,5 +1,8 @@
 import React from "react";
+import axios from "axios";
 import { useState, useEffect, useCallback } from "react";
+import { URL } from "../../util/url";
+import Modal from "../Modal";
 
 const PlanRoute = ({
   dayCurrentIndex,
@@ -9,6 +12,26 @@ const PlanRoute = ({
   planInfo,
 }) => {
   const [countNum, setCountNum] = useState([]);
+
+  const postPlan = async () => {
+    try {
+      await axios({
+        url: `${URL}/api/plan/create`,
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+        },
+        data: {
+          startPlan: planInfo.startPlan,
+          endPlan: planInfo.endPlan,
+          countDate: planInfo.countDate,
+          dayPlaceSchedule: planInfo.dayPlaceSchedule,
+        },
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const countDatePlan = useCallback(() => {
     // 날짜 계산
@@ -31,10 +54,6 @@ const PlanRoute = ({
   useEffect(() => {
     countDatePlan();
   }, [countDatePlan, planInfo.startPlan, planInfo.endPlan]);
-
-  const showData = () => {
-    console.log(planInfo);
-  };
 
   const countList = countNum.map((day, i) => (
     <li
@@ -111,10 +130,20 @@ const PlanRoute = ({
       </div>
       <button
         className="btn btn-outline btn-neutral btn-sm w-full absolute bottom-0"
-        onClick={showData}
+        onClick={() => {
+          window.my_modal_3.showModal();
+        }}
       >
         작업완료
       </button>
+      <Modal
+        modalId="my_modal_3"
+        modalTitle="여행 일정을 저장하시겠습니까?"
+        modalContent="작성하신 여행일정은 상세페이지에서 수정 및 삭제 가능합니다."
+        buttonContent="저장하기"
+        postData={postPlan}
+        linkTo={`/planDetail`}
+      />
     </div>
   );
 };
