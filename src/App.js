@@ -4,6 +4,8 @@ import Footer from "./components/Footer";
 import Main from "./routes/Main";
 import CreatePlan from "./routes/CreatePlan";
 import PlanDetail from "./routes/PlanDetail";
+import SignIn from "./routes/SignIn";
+import SignUp from "./routes/SignUp";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/create_plan" element={<CreatePlan />} />
           <Route path="/planDetail" element={<PlanDetail />} />
+          <Route path="/sign_in" element={<SignIn />} />
+          <Route path="/sign_up" element={<SignUp />} />
           Learn React
         </Routes>
         <Footer />
