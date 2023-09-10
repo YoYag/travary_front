@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/travary_front/static/css/main.6e522b4e.css",
+    "main.js": "/travary_front/static/js/main.6e5c7946.js",
+    "static/media/NotoSansKR-Regular.otf": "/travary_front/static/media/NotoSansKR-Regular.e1aa54c04a18648e6468.otf",
+    "static/media/travel_1.jpg": "/travary_front/static/media/travel_1.dc7655c3bc41814f481a.jpg",
+    "static/media/travel_2.jpg": "/travary_front/static/media/travel_2.816eb31c78065b2e34f6.jpg",
+    "index.html": "/travary_front/index.html",
+    "main.6e522b4e.css.map": "/travary_front/static/css/main.6e522b4e.css.map",
+    "main.6e5c7946.js.map": "/travary_front/static/js/main.6e5c7946.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6e522b4e.css",
+    "static/js/main.6e5c7946.js"
+  ]
+}
